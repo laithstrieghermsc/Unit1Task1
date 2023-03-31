@@ -17,7 +17,7 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
-        <li><a href="#built-with">Install reqired librarys</a></li>
+        <li><a href="#Librarys-Used">Install reqired librarys</a></li>
       </ul>
     </li>
     <li>
@@ -47,18 +47,9 @@ This simple shuffle game was created for Computer Science ATAR Unit 1, Task 1 Ye
 
 
 
-### Built With
+### Librarys Used
+I used 3 major librarys for my program
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
