@@ -40,7 +40,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-This simple shuffle game is a pro
+This simple shuffle game was created for Computer Science ATAR Unit 1, Task 1 Year 11
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
