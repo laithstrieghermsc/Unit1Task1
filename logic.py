@@ -1,12 +1,12 @@
-##########################################################################
-#                                                                        #
-#                        Mindarie Senior College                         #
-#                            Laith Striegher                             #
-#                            Task 1 - Unit 1                             #
-#                               'Shuffle'                                #
-#                         Game Logic -- logic.py                         #
-#                                                                        #
-##########################################################################
+#########################################################################
+#                                                                       #
+#                        Mindarie Senior College                        #
+#                            Laith Striegher                            #
+#                            Task 1 - Unit 1                            #
+#                               'Shuffle'                               #
+#                         Game Logic -- logic.py                        #
+#                                                                       #
+#########################################################################
 
 # Import random for shuffling
 import random

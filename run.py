@@ -1,3 +1,14 @@
+#########################################################################
+#                                                                       #
+#                        Mindarie Senior College                        #
+#                            Laith Striegher                            #
+#                            Task 1 - Unit 1                            #
+#                               'Shuffle'                               #
+#                     Program startup file -- run.py                    #
+#                                                                       #
+#########################################################################
+
+
 import main
 
 size = 3

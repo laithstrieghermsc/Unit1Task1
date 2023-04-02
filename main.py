@@ -1,12 +1,12 @@
-##########################################################################
-#                                                                        #
-#                        Mindarie Senior College                         #
-#                            Laith Striegher                             #
-#                            Task 1 - Unit 1                             #
-#                               'Shuffle'                                #
-#                       Main controller -- main.py                       #
-#                                                                        #
-##########################################################################
+#########################################################################
+#                                                                       #
+#                        Mindarie Senior College                        #
+#                            Laith Striegher                            #
+#                            Task 1 - Unit 1                            #
+#                               'Shuffle'                               #
+#                       Main controller -- main.py                      #
+#                                                                       #
+#########################################################################
 
 # import the visual library
 import tkinter as tk

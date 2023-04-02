@@ -1,6 +1,7 @@
 # Shuffle 
 ![MSC]
 ![laith.striegher]
+ [![License][License: GPL v3]][License URL]
 
 A classic puzzle game by Laith Striegher
 
@@ -153,17 +154,11 @@ python3 -c "import PIL; print(PIL.version)"
 
 That's it! You now have Python3, pip3, and Pillow installed on your MacOSX system.
 
-
-
-
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-logic.py
-
-
 <!-- LICENSE -->
-## License [![License][License: GPL v3]][License URL]
+## License
 
 Distributed under the GNU Public License. See `LICENSE.txt` for more information.
 
