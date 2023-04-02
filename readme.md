@@ -33,6 +33,7 @@ All of:
 [![TKN][tkinter]][tkinter URL]
 [![PIL][Pillow]][Pillow URL]
 
+## Installation
 
 ### Windows 10/11
 This will show you how to install Python3, Pip3, and Pillow on Windows 10/11.
