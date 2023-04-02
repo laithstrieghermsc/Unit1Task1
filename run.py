@@ -9,7 +9,7 @@
 #########################################################################
 
 
-import main
+from main import shuffle
 
 size = 3
 win_size = 1000
@@ -37,16 +37,14 @@ applicible_photos = (  # Array of photos
      "demo\\2a.png", "demo\\2b.png", "demo\\2c.png", "demo\\2d.png", "demo\\2e.png", "demo\\2f.png",
      "demo\\30.png"])
 
-game = main.shuffle(size=size, win_size=win_size, title=title, shuffle_rule=shuffle_rule, default_color=default_color,
-                    complete_color=complete_color, exit_on_completion=exit_on_completion,
-                    overrideredirect=overrideredirect, spot_detection=spot_detection,
-                    highlight_thickness=highlight_thickness, applicable_photos=applicible_photos)
+game = shuffle(board_size=size, window_size=win_size, game_title=title, shuffle_rule=shuffle_rule, default_bg_color=default_color,
+                    complete_bg_color=complete_color, exit_on_complete=exit_on_completion,
+                    override=overrideredirect, pos_esp=spot_detection,
+                    highlight_thickness=highlight_thickness, photo_options=applicible_photos)
 while True:
     game.start()
-    game.reset(size=size, win_size=win_size, title=title, shuffle_rule=shuffle_rule, default_color=default_color,
+    game.reset(size=size, window_size=win_size, game_title=title, shuffle_rule=shuffle_rule, default_color=default_color,
                complete_color=complete_color, exit_on_completion=exit_on_completion,
-               overrideredirect=overrideredirect, spot_detection=spot_detection,
+               overrideredirect=overrideredirect, pos_esp=spot_detection,
                highlight_thickness=highlight_thickness, applicable_photos=applicible_photos)
 
-# if game.game.is_complete():
-#     exit()

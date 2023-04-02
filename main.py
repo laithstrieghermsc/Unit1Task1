@@ -15,15 +15,15 @@ from array import array
 from PIL import ImageTk, Image
 from random import randint
 # import the logic module
-import logic
+from logic import logic
 
 
 class shuffle:
-    def __init__(self, size=3, win_size=1000, title="Shuffle Game", shuffle_rule=None, image_location=None,
-                 default_color="#f0f0f0", complete_color="#00ff00", exit_on_completion=False, overrideredirect=False,
-                 spot_detection=False, highlight_thickness=1, applicable_photos=None):
-        if applicable_photos is None:
-            self.applicible_photos = (  # Array of photos
+    def __init__(self, board_size=3, window_size=1000, game_title="Shuffle Game", shuffle_rule=None, image_file=None,
+                 default_bg_color="#f0f0f0", complete_bg_color="#00ff00", exit_on_complete=False, override=False,
+                 pos_esp=False, highlight_thickness=1, photo_options=None):
+        if photo_options is None:
+            self.photo_options = (  # Array of photos
                 ["demo\\0.png", "demo\\1.png", "demo\\2.png", "demo\\3.png", "demo\\4.png", "demo\\5.png",
                  "demo\\6.png",
                  "demo\\7.png", "demo\\8.png", "demo\\9.png", "demo\\a.png", "demo\\b.png", "demo\\c.png",
@@ -39,61 +39,59 @@ class shuffle:
                  "demo\\2a.png", "demo\\2b.png", "demo\\2c.png", "demo\\2d.png", "demo\\2e.png", "demo\\2f.png",
                  "demo\\30.png"])
         else:
-            self.applicible_photos = applicable_photos
-        self.size = size
-        self.win_size = win_size
-        self.title = title
-        self.exit_on_completion = exit_on_completion
-        self.spot_detection = spot_detection
+            self.photo_options = photo_options
+        self.board_size = board_size
+        self.window_size = window_size
+        self.game_title = game_title
+        self.exit_on_complete = exit_on_complete
+        self.pos_esp = pos_esp
         self.highlight_thickness = highlight_thickness
         # set the shuffle_rule attribute to either the passed argument or a default value
         if shuffle_rule is not None:
             self.shuffle_rule = shuffle_rule
         else:
-            self.shuffle_rule = pow(size, 6)
+            self.shuffle_rule = pow(board_size, 6)
 
-        # set the image_location attribute to either the passed argument or a default value
-        if image_location is not None:
-            self.image_location = image_location
+        # set the image_file attribute to either the passed argument or a default value
+        if image_file is not None:
+            self.image_file = image_file
         else:
-            self.image_location = self.applicible_photos[randint(0, len(self.applicible_photos) - 1)]
+            self.image_file = self.photo_options[randint(0, len(self.photo_options) - 1)]
 
-        # set the cell_size attribute based on the size of the window and the size of the game board
-        self.cell_size = int(win_size / size)
-        self.moves_count = 0
-        self.default_color = default_color
-        self.complete_color = complete_color
+        # set the button_size attribute based on the size of the window and the size of the game board
+        self.button_size = int(window_size / board_size)
+        self.num_moves = 0
+        self.default_bg_color = default_bg_color
+        self.complete_bg_color = complete_bg_color
 
         # initialize empty lists for the buttons and cell photos
-        self.buttons = []
-        self.cell_photos = []
+        self.buttons_list = []
+        self.photos_list = []
 
         # initialize a logic object for the game
-        self.game = logic.logic(size, False)
+        self.game_logic = logic(board_size, False)
 
         # create the main tkinter window
         self.root = tk.Tk()
-        self.root.title(self.title)
-        self.root.overrideredirect(overrideredirect)
+        self.root.title(self.game_title)
+        self.root.overrideredirect(override)
 
-    # def add_photo(self, file_location):
-    #     self.applicable_photos.append(file_location) -------- Removed for stupid reasons
-    def reset(self, size=3, win_size=1000, title="Shuffle Game", shuffle_rule=None, image_location=None,
+    def reset(self, size=3, window_size=1000, game_title="Shuffle Game", shuffle_rule=None, image_file=None,
               default_color="#f0f0f0", complete_color="#00ff00", exit_on_completion=False, overrideredirect=False,
-              spot_detection=False, highlight_thickness=1, applicable_photos=None):
-        self.__init__(size=size, win_size=win_size, title=title, shuffle_rule=shuffle_rule,
-                      image_location=image_location, default_color=default_color,
-                      complete_color=complete_color, exit_on_completion=exit_on_completion,
-                      overrideredirect=overrideredirect, spot_detection=spot_detection,
-                      highlight_thickness=highlight_thickness, applicable_photos=applicable_photos)
+              pos_esp=False, highlight_thickness=1, applicable_photos=None):
+        self.__init__(board_size=size, window_size=window_size, game_title=game_title, shuffle_rule=shuffle_rule,
+                      image_file=image_file, default_bg_color=default_color,
+                      complete_bg_color=complete_color, exit_on_complete=exit_on_completion,
+                      override=overrideredirect, pos_esp=pos_esp,
+                      highlight_thickness=highlight_thickness, photo_options=applicable_photos)
 
     def start(self):
         # create and shuffle the game board
-        self.game.create_board()
-        self.game.shuffle_board(self.shuffle_rule)
+        self.game_logic.initialize_game_board()
+        self.game_logic.shuffle_game_board(self.shuffle_rule)
 
         # open the image specified by the image_location attribute
-        self.img = Image.open(self.image_location)
+        self.img = Image.open(self.image_file)
 
         # adjust the size of the image to fit the window if necessary
         if self.img.width > self.img.height:
@@ -101,53 +99,54 @@ class shuffle:
                 .crop(
                 (int((self.img.width - self.img.height) / 2), 0,
                  int((self.img.width - self.img.height) / 2 + self.img.height), self.img.height)) \
-                .resize((self.win_size, self.win_size))
+                .resize((self.window_size, self.window_size))
         elif self.img.height > self.img.width:
             self.img = self.img \
                 .crop((self.img.width, int(self.img.height - self.img.width / 2), self.img.width,
                        int(self.img.height - self.img.width / self.img.width))) \
-                .resize((self.win_size, self.win_size))
+                .resize((self.window_size, self.window_size))
 
         # create a blank image to represent the empty cell
         self.blank = ImageTk.PhotoImage(
-            Image.new(mode="RGB", size=(int(self.win_size / self.size), int(self.win_size / self.size)),
+            Image.new(mode="RGB",
+                      size=(int(self.window_size / self.board_size), int(self.window_size / self.board_size)),
                       color=0xffffff))
 
         # create an image for each cell on the game board
-        for cell in range(0, pow(self.size, 2) - 1):
-            complete_cell_pos = self.game.find_cell_complete(cell)
-            self.cell_photos.append(ImageTk.PhotoImage(self.img.crop((self.cell_size * complete_cell_pos[1],
-                                                                      self.cell_size * complete_cell_pos[0],
-                                                                      self.cell_size * complete_cell_pos[
-                                                                          1] + self.cell_size,
-                                                                      self.cell_size * complete_cell_pos[
-                                                                          0] + self.cell_size)).resize(
-                (self.cell_size, self.cell_size))))
+        for cell in range(0, pow(self.board_size, 2) - 1):
+            complete_cell_pos = self.game_logic.find_cell_location_on_complete_board(cell)
+            self.photos_list.append(ImageTk.PhotoImage(self.img.crop((self.button_size * complete_cell_pos[1],
+                                                                      self.button_size * complete_cell_pos[0],
+                                                                      self.button_size * complete_cell_pos[
+                                                                          1] + self.button_size,
+                                                                      self.button_size * complete_cell_pos[
+                                                                          0] + self.button_size)).resize(
+                (self.button_size, self.button_size))))
         # create an image for the empty cell
-        complete_cell_pos = self.game.find_cell_complete(-1)
-        self.cell_photos.append(ImageTk.PhotoImage(self.img.crop((self.cell_size * complete_cell_pos[1],
-                                                                  self.cell_size * complete_cell_pos[0],
-                                                                  self.cell_size * complete_cell_pos[
-                                                                      1] + self.cell_size,
-                                                                  self.cell_size * complete_cell_pos[
-                                                                      0] + self.cell_size)).resize(
-            (self.cell_size, self.cell_size))))
+        complete_cell_pos = self.game_logic.find_cell_location_on_complete_board(-1)
+        self.photos_list.append(ImageTk.PhotoImage(self.img.crop((self.button_size * complete_cell_pos[1],
+                                                                  self.button_size * complete_cell_pos[0],
+                                                                  self.button_size * complete_cell_pos[
+                                                                      1] + self.button_size,
+                                                                  self.button_size * complete_cell_pos[
+                                                                      0] + self.button_size)).resize(
+            (self.button_size, self.button_size))))
         # iterate over each row
-        for i in range(self.size):
+        for i in range(self.board_size):
             row = []  # create a new list for each row
             # iterate over each column
-            for j in range(self.size):
+            for j in range(self.board_size):
                 # create a new button for each cell in the grid
                 # set the font, background color, width and height of the button
                 # set the command to be executed when the button is clicked
-                button = tk.Button(self.root, font=("Arial", 60), bg=self.default_color, width=self.cell_size,
-                                   height=self.cell_size,
-                                   command=lambda i=i, j=j: self.handle_click(self.buttons[i][j]), border=0,
+                button = tk.Button(self.root, font=("Arial", 60), bg=self.default_bg_color, width=self.button_size,
+                                   height=self.button_size,
+                                   command=lambda i=i, j=j: self.handle_click(self.buttons_list[i][j]), border=0,
                                    highlightthickness=self.highlight_thickness)
                 # set the position of the button on the grid
                 button.grid(row=i, column=j, sticky="nsew")
                 row.append(button)  # add the button to the current row
-            self.buttons.append(row)  # add the row to the list of buttons
+            self.buttons_list.append(row)  # add the row to the list of buttons
 
         # update the state of the buttons to match the current game state
         self.update_buttons()
@@ -160,46 +159,47 @@ class shuffle:
         # get the row and column of the clicked button
         row, col = clicked_button.grid_info()["row"], clicked_button.grid_info()["column"]
         # call the make_move method of the game object
-        if self.game.make_move(col, row) == 0:
-            self.moves_count += 1  # Increment the move counter
+        if self.game_logic.move_cell(col, row) == 0:
+            self.num_moves += 1  # Increment the move counter
         # update the text of the buttons
         self.update_buttons()
-        if self.moves_count != 1:  # if "s" is needed
+        if self.num_moves != 1:  # if "s" is needed
             s = "s"  # make s available
         else:
             s = ""  # ensure s is blank and exists
-        self.root.title(f"{self.title}  {self.moves_count} move{s}")  # Refresh the Toolbar to reflect game state
+        self.root.title(f"{self.game_title}  {self.num_moves} move{s}")  # Refresh the Toolbar to reflect game state
 
     # create a method to update the text of the buttons
     def update_buttons(self):
         global game, img  # Pull global variables
-        for i in range(self.size):  # for every column
-            for j in range(self.size):  # For every cell in the column
+        for i in range(self.board_size):  # for every column
+            for j in range(self.board_size):  # For every cell in the column
                 # get the button at (i, j)
-                updating_button = self.buttons[i][j]
+                updating_button = self.buttons_list[i][j]
                 # get the value of the game board at (i, j)
-                cell_value = self.game.get_value(i, j)
+                cell_value = self.game_logic.get_cell_value(i, j)
                 if cell_value != -1:  # if cell is not blank
                     # set the text of the button to the value and the image of the button to the appropriate image
-                    updating_button.config(text=str(cell_value), image=self.cell_photos[cell_value],
+                    updating_button.config(text=str(cell_value), image=self.photos_list[cell_value],
                                            highlightthickness=self.highlight_thickness)
                 else:
                     # set the text of the button to the value and the image of the button be blank
                     updating_button.config(text=str(cell_value), image=self.blank)
-                # if spot_detection is on
-                if self.spot_detection:
-                    if self.game.find_cell(cell_value) == self.game.find_cell_complete(cell_value):
+                # if pos_esp is on
+                if self.pos_esp:
+                    if self.game_logic.find_cell_location(
+                            cell_value) == self.game_logic.find_cell_location_on_complete_board(cell_value):
                         updating_button.config(highlightthickness=0)
                 # Check if game is complete
-                if self.game.is_complete():
+                if self.game_logic.is_game_board_complete():
                     # Set background color to complete color
-                    updating_button.config(background=self.complete_color, highlightthickness=0)
+                    updating_button.config(background=self.complete_bg_color, highlightthickness=0)
                     # Checks if cell is blank
-                    if self.game.get_value(i, j) == -1:
+                    if self.game_logic.get_cell_value(i, j) == -1:
                         # Sets the cell to the final image
-                        updating_button.config(image=self.cell_photos[len(self.cell_photos) - 1])
-                    if self.exit_on_completion:
+                        updating_button.config(image=self.photos_list[len(self.photos_list) - 1])
+                    if self.exit_on_complete:
                         exit(0)
                 else:
                     # Set background color to default
-                    updating_button.config(background=self.default_color)
+                    updating_button.config(background=self.default_bg_color)
