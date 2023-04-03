@@ -28,7 +28,7 @@ With a desktop environment and
 
 All of:
 
-![Python3]
+[![PTH][Python3]][Python3 URL]
 [![RDM][random]][random URL]
 [![TKN][tkinter]][tkinter URL]
 [![PIL][Pillow]][Pillow URL]
@@ -394,6 +394,7 @@ Distributed under the GNU Public License. See `LICENSE.txt` for more information
 [random]: source/random.svg
 [random URL]: https://docs.python.org/3/library/random.html
 [Python3]: source/python3.svg
+[Python3 URL]: https://www.python.org/
 [License: GPL v3]: source/gplv3.svg
 [License URL]: https://www.gnu.org/licenses/gpl-3.0.en.html
 [MSC]: source/msc.svg
