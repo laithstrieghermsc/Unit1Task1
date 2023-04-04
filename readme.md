@@ -33,6 +33,8 @@ All of:
 [![TKN][tkinter]][tkinter URL]
 [![PIL][Pillow]][Pillow URL]
 
+<div style="page-break-after: always;"></div>
+
 ## Installation
 
 ### Windows 10/11
