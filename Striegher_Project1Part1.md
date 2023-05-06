@@ -329,6 +329,7 @@ The following trace table assumes a `board_size` of 5 and a random shuffle of:
 | line   | 85   | 11        | [`[7, 21, 8, 16, 1]`,<br>` [-1, 11, 9, 5, 13]`,<br>` [15, 22, 3, 2, 4]`,<br>` [12, 14, 6, 19, 20]`,<br>` [23, 18, 10, 17, 0]`]  | 5            | 1    | 1    |
 | line   | 86   | 11        | [`[7, 21, 8, 16, 1]`,<br>` [-1, 11, 9, 5, 13]`,<br>` [15, 22, 3, 2, 4]`,<br>` [12, 14, 6, 19, 20]`,<br>` [23, 18, 10, 17, 0]`]  | 5            | 1    | 1    |
 | return | 86   | 11        | [`[7, 21, 8, 16, 1]`,<br>` [-1, 11, 9, 5, 13]`,<br>` [15, 22, 3, 2, 4]`,<br>` [12, 14, 6, 19, 20]`,<br>` [23, 18, 10, 17, 0]`]  | 5            | 1    | 1    | [1,1]    |
+
 As you can see the method iterated through the board and found `11` at (1,1) and returned so in the format `[y,x]` (`[1,1]`).
 
 Now let's see what happens with a `board_size` of 3 and a random shuffle of:
@@ -363,6 +364,7 @@ Now let's see what happens with a `board_size` of 3 and a random shuffle of:
 | line   | 83   | 11        | [` [1, 4, 6]`,<br> ` [-1, 7, 5]`,<br> ` [2, 0, 3]`] | 3            | 2     | 2     |
 | line   | 87   | 11        | [` [1, 4, 6]`,<br> ` [-1, 7, 5]`,<br> ` [2, 0, 3]`] | 3            | 2     | 2     |
 | return | 87   | 11        | [` [1, 4, 6]`,<br> ` [-1, 7, 5]`,<br> ` [2, 0, 3]`] | 3            | 2     | 2     | 1        |
+
 As you can see the method iterated through the board and failed to find `11` so it returned 1 to indicate failure to find the tile. Note that with in the GUI version of the program a returned value of one is impossible as the users only being able to select existing tiles acts as a natural filter.
 
 The method `find_tile_location_on_complete_board` will not be the subject of a trace table due to its similarity to `find_tile_location`. (15 character difference on lines `85` and `93`)
