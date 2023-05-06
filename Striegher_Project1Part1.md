@@ -497,7 +497,8 @@ In this case run.py represents a file containing:
 import logic
 i = logic.logic()
 ```
-A test run is below. Note that strings found in between two `~` represents user input and as such `~` is not an aspect of the input or output
+A test run is below. Note that strings found in between two `~` represents user input and as such `~` is not an aspect of the input or output.
+
 ```text
 "python.exe" "C:\<Working Directory>\run.py" 
 ----------
