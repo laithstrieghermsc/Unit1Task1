@@ -1466,7 +1466,7 @@ Process finished with exit code 0
 ```
 
 # Full logic pseudocode disassembled from the logic class:
-```psudocade
+```psudocode
 #########################################################################
 #                                                                       #
 #                        Mindarie Senior College                        #
