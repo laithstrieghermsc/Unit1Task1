@@ -3,7 +3,7 @@
 #                        Mindarie Senior College                        #
 #                            Laith Striegher                            #
 #                            Task 1 - Unit 1                            #
-#                               'Shuffle'                               #
+#                                'Slide'                                #
 #                       Main controller -- main.py                      #
 #                                                                       #
 #########################################################################
@@ -18,12 +18,12 @@ from random import randint
 from logic import logic
 
 
-class shuffle:
+class slide:
     def __init__(self, board_size=3, window_size=1000, game_title="Shuffle Game", shuffle_rule=None, image_file=None,
                  default_bg_color="#f0f0f0", complete_bg_color="#00ff00", exit_on_complete=False, override=False,
-                 pos_esp=False, highlight_thickness=1, photo_options=None):
-        if photo_options is None:
-            self.photo_options = (  # Array of photos
+                 pos_esp=False, highlight_thickness=1, applicable_photos=None):
+        if applicable_photos is None:
+            self.applicable_photos = (  # Array of photos
                 ["demo\\0.png", "demo\\1.png", "demo\\2.png", "demo\\3.png", "demo\\4.png", "demo\\5.png",
                  "demo\\6.png",
                  "demo\\7.png", "demo\\8.png", "demo\\9.png", "demo\\a.png", "demo\\b.png", "demo\\c.png",
@@ -39,7 +39,7 @@ class shuffle:
                  "demo\\2a.png", "demo\\2b.png", "demo\\2c.png", "demo\\2d.png", "demo\\2e.png", "demo\\2f.png",
                  "demo\\30.png"])
         else:
-            self.photo_options = photo_options
+            self.applicable_photos = applicable_photos
         self.board_size = board_size
         self.window_size = window_size
         self.game_title = game_title
@@ -56,7 +56,7 @@ class shuffle:
         if image_file is not None:
             self.image_file = image_file
         else:
-            self.image_file = self.photo_options[randint(0, len(self.photo_options) - 1)]
+            self.image_file = self.applicable_photos[randint(0, len(self.applicable_photos) - 1)]
 
         # set the button_size attribute based on the size of the window and the size of the game board
         self.button_size = int(window_size / board_size)
@@ -64,7 +64,7 @@ class shuffle:
         self.default_bg_color = default_bg_color
         self.complete_bg_color = complete_bg_color
 
-        # initialize empty lists for the buttons and cell photos
+        # initialize empty lists for the buttons and tile photos
         self.buttons_list = []
         self.photos_list = []
 
@@ -75,15 +75,6 @@ class shuffle:
         self.root = tk.Tk()
         self.root.title(self.game_title)
         self.root.overrideredirect(override)
-
-    def reset(self, size=3, window_size=1000, game_title="Shuffle Game", shuffle_rule=None, image_file=None,
-              default_color="#f0f0f0", complete_color="#00ff00", exit_on_completion=False, overrideredirect=False,
-              pos_esp=False, highlight_thickness=1, applicable_photos=None):
-        self.__init__(board_size=size, window_size=window_size, game_title=game_title, shuffle_rule=shuffle_rule,
-                      image_file=image_file, default_bg_color=default_color,
-                      complete_bg_color=complete_color, exit_on_complete=exit_on_completion,
-                      override=overrideredirect, pos_esp=pos_esp,
-                      highlight_thickness=highlight_thickness, photo_options=applicable_photos)
 
     def start(self):
         # create and shuffle the game board
@@ -106,29 +97,29 @@ class shuffle:
                        int(self.img.height - self.img.width / self.img.width))) \
                 .resize((self.window_size, self.window_size))
 
-        # create a blank image to represent the empty cell
+        # create a blank image to represent the empty tile
         self.blank = ImageTk.PhotoImage(
             Image.new(mode="RGB",
                       size=(int(self.window_size / self.board_size), int(self.window_size / self.board_size)),
                       color=0xffffff))
 
-        # create an image for each cell on the game board
-        for cell in range(0, pow(self.board_size, 2) - 1):
-            complete_cell_pos = self.game_logic.find_cell_location_on_complete_board(cell)
-            self.photos_list.append(ImageTk.PhotoImage(self.img.crop((self.button_size * complete_cell_pos[1],
-                                                                      self.button_size * complete_cell_pos[0],
-                                                                      self.button_size * complete_cell_pos[
+        # create an image for each tile on the game board
+        for tile in range(0, pow(self.board_size, 2) - 1):
+            complete_tile_pos = self.game_logic.find_tile_location_on_complete_board(tile)
+            self.photos_list.append(ImageTk.PhotoImage(self.img.crop((self.button_size * complete_tile_pos[1],
+                                                                      self.button_size * complete_tile_pos[0],
+                                                                      self.button_size * complete_tile_pos[
                                                                           1] + self.button_size,
-                                                                      self.button_size * complete_cell_pos[
+                                                                      self.button_size * complete_tile_pos[
                                                                           0] + self.button_size)).resize(
                 (self.button_size, self.button_size))))
-        # create an image for the empty cell
-        complete_cell_pos = self.game_logic.find_cell_location_on_complete_board(-1)
-        self.photos_list.append(ImageTk.PhotoImage(self.img.crop((self.button_size * complete_cell_pos[1],
-                                                                  self.button_size * complete_cell_pos[0],
-                                                                  self.button_size * complete_cell_pos[
+        # create an image for the empty tile
+        complete_tile_pos = self.game_logic.find_tile_location_on_complete_board(-1)
+        self.photos_list.append(ImageTk.PhotoImage(self.img.crop((self.button_size * complete_tile_pos[1],
+                                                                  self.button_size * complete_tile_pos[0],
+                                                                  self.button_size * complete_tile_pos[
                                                                       1] + self.button_size,
-                                                                  self.button_size * complete_cell_pos[
+                                                                  self.button_size * complete_tile_pos[
                                                                       0] + self.button_size)).resize(
             (self.button_size, self.button_size))))
         # iterate over each row
@@ -136,7 +127,7 @@ class shuffle:
             row = []  # create a new list for each row
             # iterate over each column
             for j in range(self.board_size):
-                # create a new button for each cell in the grid
+                # create a new button for each tile in the grid
                 # set the font, background color, width and height of the button
                 # set the command to be executed when the button is clicked
                 button = tk.Button(self.root, font=("Arial", 60), bg=self.default_bg_color, width=self.button_size,
@@ -159,7 +150,7 @@ class shuffle:
         # get the row and column of the clicked button
         row, col = clicked_button.grid_info()["row"], clicked_button.grid_info()["column"]
         # call the make_move method of the game object
-        if self.game_logic.move_cell(col, row) == 0:
+        if self.game_logic.move_tile(col, row) == 0:
             self.num_moves += 1  # Increment the move counter
         # update the text of the buttons
         self.update_buttons()
@@ -173,30 +164,30 @@ class shuffle:
     def update_buttons(self):
         global game, img  # Pull global variables
         for i in range(self.board_size):  # for every column
-            for j in range(self.board_size):  # For every cell in the column
+            for j in range(self.board_size):  # For every tile in the column
                 # get the button at (i, j)
                 updating_button = self.buttons_list[i][j]
                 # get the value of the game board at (i, j)
-                cell_value = self.game_logic.get_cell_value(i, j)
-                if cell_value != -1:  # if cell is not blank
+                tile_value = self.game_logic.get_tile_value(i, j)
+                if tile_value != -1:  # if tile is not blank
                     # set the text of the button to the value and the image of the button to the appropriate image
-                    updating_button.config(text=str(cell_value), image=self.photos_list[cell_value],
+                    updating_button.config(text=str(tile_value), image=self.photos_list[tile_value],
                                            highlightthickness=self.highlight_thickness)
                 else:
                     # set the text of the button to the value and the image of the button be blank
-                    updating_button.config(text=str(cell_value), image=self.blank)
+                    updating_button.config(text=str(tile_value), image=self.blank)
                 # if pos_esp is on
                 if self.pos_esp:
-                    if self.game_logic.find_cell_location(
-                            cell_value) == self.game_logic.find_cell_location_on_complete_board(cell_value):
+                    if self.game_logic.find_tile_location(
+                            tile_value) == self.game_logic.find_tile_location_on_complete_board(tile_value):
                         updating_button.config(highlightthickness=0)
                 # Check if game is complete
                 if self.game_logic.is_game_board_complete():
                     # Set background color to complete color
                     updating_button.config(background=self.complete_bg_color, highlightthickness=0)
-                    # Checks if cell is blank
-                    if self.game_logic.get_cell_value(i, j) == -1:
-                        # Sets the cell to the final image
+                    # Checks if tile is blank
+                    if self.game_logic.get_tile_value(i, j) == -1:
+                        # Sets the tile to the final image
                         updating_button.config(image=self.photos_list[len(self.photos_list) - 1])
                     if self.exit_on_complete:
                         exit(0)

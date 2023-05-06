@@ -1,15 +1,15 @@
-#########################################################################
-#                                                                       #
-#                        Mindarie Senior College                        #
-#                            Laith Striegher                            #
-#                            Task 1 - Unit 1                            #
-#                               'Shuffle'                               #
-#                     Program startup file -- run.py                    #
-#                                                                       #
-#########################################################################
-
-
-from main import shuffle
+# #########################################################################
+# #                                                                       #
+# #                        Mindarie Senior College                        #
+# #                            Laith Striegher                            #
+# #                            Task 1 - Unit 1                            #
+# #                                'Slide'                                #
+# #                     Program startup file -- run.py                    #
+# #                                                                       #
+# #########################################################################
+#
+#
+from main import slide
 
 size = 3
 win_size = 1000
@@ -17,8 +17,8 @@ title = "Shuffle Game"
 shuffle_rule = pow(size, 6)
 default_color = "#f0f0f0"
 complete_color = "#00ff00"
-exit_on_completion = False
-overrideredirect = False,
+exit_on_completion = True
+overrideredirect = False
 spot_detection = False
 highlight_thickness = 1
 applicible_photos = (  # Array of photos
@@ -37,14 +37,11 @@ applicible_photos = (  # Array of photos
      "demo\\2a.png", "demo\\2b.png", "demo\\2c.png", "demo\\2d.png", "demo\\2e.png", "demo\\2f.png",
      "demo\\30.png"])
 
-game = shuffle(board_size=size, window_size=win_size, game_title=title, shuffle_rule=shuffle_rule, default_bg_color=default_color,
-                    complete_bg_color=complete_color, exit_on_complete=exit_on_completion,
-                    override=overrideredirect, pos_esp=spot_detection,
-                    highlight_thickness=highlight_thickness, photo_options=applicible_photos)
 while True:
+    game = slide(board_size=size, window_size=win_size, game_title=title, shuffle_rule=shuffle_rule,
+                   default_bg_color=default_color,
+                   complete_bg_color=complete_color, exit_on_complete=exit_on_completion,
+                   override=overrideredirect, pos_esp=spot_detection,
+                   highlight_thickness=highlight_thickness, applicable_photos=applicible_photos)
     game.start()
-    game.reset(size=size, window_size=win_size, game_title=title, shuffle_rule=shuffle_rule, default_color=default_color,
-               complete_color=complete_color, exit_on_completion=exit_on_completion,
-               overrideredirect=overrideredirect, pos_esp=spot_detection,
-               highlight_thickness=highlight_thickness, applicable_photos=applicible_photos)
-
+    if game.num_moves==0: break

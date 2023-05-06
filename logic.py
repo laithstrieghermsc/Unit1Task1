@@ -3,7 +3,7 @@
 #                        Mindarie Senior College                        #
 #                            Laith Striegher                            #
 #                            Task 1 - Unit 1                            #
-#                               'Shuffle'                               #
+#                                'Slide'                                #
 #                         Game Logic -- logic.py                        #
 #                                                                       #
 #########################################################################
@@ -33,7 +33,7 @@ class logic:
         runs = 0
         while runs < moves:  # Repeat until shuffled <moves> amount of times
             moved = False
-            null_pos = self.find_cell_location(-1)  # Find empty cell
+            null_pos = self.find_tile_location(-1)  # Find empty tile
             while not moved:  # Ensure at least one moves happens every cycle
                 direct = random.randint(0, 3)  # Determine random to try
                 if null_pos[0] != self.board_size - 1 and direct == 0:  # Determine if this move is possible
@@ -55,40 +55,42 @@ class logic:
             runs += 1
 
     # Create an id based move method
-    def move_cell_by_id(self, cell_id):
-        # Find cell
-        cell_pos = self.find_cell_location(cell_id)
-        if cell_pos[0] < self.board_size - 1:  # Determine if cell is not on bottom edge
-            if self.game_board[cell_pos[0] + 1][cell_pos[1]] == -1:  # Determine if move is otherwise possible
-                self.game_board[cell_pos[0] + 1][cell_pos[1]], self.game_board[cell_pos[0]][cell_pos[1]] = cell_id, -1  # Flip values
+    def move_tile_by_id(self, tile_id):
+        # Find tile
+        tile_pos = self.find_tile_location(tile_id)
+        if tile_id > pow(self.board_size, 2)-2:
+            return 1
+        if tile_pos[0] < self.board_size - 1:  # Determine if tile is not on bottom edge
+            if self.game_board[tile_pos[0] + 1][tile_pos[1]] == -1:  # Determine if move is otherwise possible
+                self.game_board[tile_pos[0] + 1][tile_pos[1]], self.game_board[tile_pos[0]][tile_pos[1]] = tile_id, -1  # Flip values
                 return 0  # Skip unnecessary checks
-        if cell_pos[1] < self.board_size - 1:  # Determine if cell is not on right edge
-            if self.game_board[cell_pos[0]][cell_pos[1] + 1] == -1:  # Determine if move is otherwise possible
-                self.game_board[cell_pos[0]][cell_pos[1] + 1], self.game_board[cell_pos[0]][cell_pos[1]] = cell_id, -1  # Flip values
+        if tile_pos[1] < self.board_size - 1:  # Determine if tile is not on right edge
+            if self.game_board[tile_pos[0]][tile_pos[1] + 1] == -1:  # Determine if move is otherwise possible
+                self.game_board[tile_pos[0]][tile_pos[1] + 1], self.game_board[tile_pos[0]][tile_pos[1]] = tile_id, -1  # Flip values
                 return 0  # Skip unnecessary checks
-        if cell_pos[0] != 0:  # Determine if cell is not on top edge
-            if self.game_board[cell_pos[0] - 1][cell_pos[1]] == -1:  # Determine if move is otherwise possible
-                self.game_board[cell_pos[0] - 1][cell_pos[1]], self.game_board[cell_pos[0]][cell_pos[1]] = cell_id, -1  # Flip values
+        if tile_pos[0] != 0:  # Determine if tile is not on top edge
+            if self.game_board[tile_pos[0] - 1][tile_pos[1]] == -1:  # Determine if move is otherwise possible
+                self.game_board[tile_pos[0] - 1][tile_pos[1]], self.game_board[tile_pos[0]][tile_pos[1]] = tile_id, -1  # Flip values
                 return 0  # Skip unnecessary checks
-        if cell_pos[1] != 0:  # Determine if cell is not on left edge
-            if self.game_board[cell_pos[0]][cell_pos[1] - 1] == -1:  # Determine if move is otherwise possible
-                self.game_board[cell_pos[0]][cell_pos[1] - 1], self.game_board[cell_pos[0]][cell_pos[1]] = cell_id, -1  # Flip values
+        if tile_pos[1] != 0:  # Determine if tile is not on left edge
+            if self.game_board[tile_pos[0]][tile_pos[1] - 1] == -1:  # Determine if move is otherwise possible
+                self.game_board[tile_pos[0]][tile_pos[1] - 1], self.game_board[tile_pos[0]][tile_pos[1]] = tile_id, -1  # Flip values
                 return 0  # Skip unnecessary checks
-        return 1  # Cell can't be moved
+        return 1  # tile can't be moved
 
     # Create an id based find method
-    def find_cell_location(self, cell_id):
+    def find_tile_location(self, tile_id):
         for y in range(0, self.board_size):  # Scan columns
             for x in range(0, self.board_size):  # Scan rows
-                if self.game_board[y][x] == cell_id:
+                if self.game_board[y][x] == tile_id:
                     return [y, x]  # Return location
         return 1  # Error
 
     # Create an id based find method for a complete board
-    def find_cell_location_on_complete_board(self, cell_id):
+    def find_tile_location_on_complete_board(self, tile_id):
         for y in range(0, self.board_size):  # Scan columns
             for x in range(0, self.board_size):  # Scan rows
-                if self.get_complete_game_board()[y][x] == cell_id:
+                if self.get_complete_game_board()[y][x] == tile_id:
                     return [y, x]  # Return location
         return 1  # Error
 
@@ -106,7 +108,7 @@ class logic:
         string = strike + "\n"  # Begin the string with a strike
         for i in range(0, self.board_size):  # Begin a row
             for j in range(0, self.board_size):
-                if self.game_board[i][j] != -1:  # Determine if cell is empty
+                if self.game_board[i][j] != -1:  # Determine if tile is empty
                     string += "|" + str(self.game_board[i][j]).zfill(2)  # Add a vertical bar and a value
                 else:
                     string += "|  "  # Add a vertical bar and space
@@ -118,20 +120,29 @@ class logic:
         return self.game_board == self.get_complete_game_board()
 
     # Create a location based find method
-    def get_cell_value(self, row, col):
+    def get_tile_value(self, row, col):
         return self.game_board[row][col]
 
     # Create a location based move method
-    def move_cell(self, row, column):
-        if self.game_board[column][row] >= 0 or self.game_board[column][row] <= pow(self.board_size, 2) - 1:
-            return self.move_cell_by_id(self.game_board[column][row])
+    def move_tile(self, row, column):
+        if self.game_board[column][row] >= 0 or self.game_board[column][row] <= pow(self.board_size, 2) - 2:
+            return self.move_tile_by_id(self.game_board[column][row])
         return 1
 
     # Simple game interface method
     def start_game(self):
         while True:  # Loop until complete
             print(self.get_game_board_string())  # Print Board
-            if self.move_cell_by_id(int(input("What to move: "))) == 0:  # Ask user for cell to move and move it
+            int_input = None
+            while int_input == None:
+                try:
+                    int_input=int(input("What to move: "))
+                    if 0 > int_input > pow(self.board_size, 2)-2:
+                        raise ValueError(f"Need an integer from 0 to {pow(self.board_size,2)-2}")
+                except:
+                    int_input=None
+                    print(f"Please intput an integer from 0 to {pow(self.board_size,2)-2}\n")
+            if self.move_tile_by_id(int_input) == 0:  # Ask user for tile to move and move it
                 print("\nMoved\n\n")  # Tell user cell has been moved
             else:
                 print("\nCan't move that\n\n")  # If unable to move than tell user
