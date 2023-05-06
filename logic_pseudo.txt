@@ -1,0 +1,162 @@
+#########################################################################
+#                                                                       #
+#                        Mindarie Senior College                        #
+#                            Laith Striegher                            #
+#                            Task 1 - Unit 1                            #
+#                                 'Slide'                               #
+#                     Game Logic -- logic_pseudo.txt                    #
+#                                                                       #
+#########################################################################
+
+
+
+13. board_size=3
+14. self_start_enabled=True
+15.
+16. MODULE initialize_game_board():
+17.     game_board = get_complete_game_board()
+18. END initialize_game_board
+19.
+20. MODULE shuffle_game_board(moves):
+21.     runs = 0
+22.     WHILE runs < moves:
+23.         moved = False
+24.         null_pos = find_tile_location(-1)
+25.         WHILE not moved:
+26.             direct = random(0, 3)
+27.             IF null_pos[0] != board_size - 1 and direct = 0:
+28.                 game_board[null_pos[0]][null_pos[1]], game_board[null_pos[0] + 1][null_pos[1]] = game_board[null_pos[0] + 1][null_pos[1]], -1
+29.                 moved = True
+30.                 continue
+31.             END IF
+32.             IF null_pos[1] != board_size - 1 and direct = 1:
+33.                 game_board[null_pos[0]][null_pos[1]], game_board[null_pos[0]][null_pos[1] + 1] = game_board[null_pos[0]][null_pos[1] + 1], -1
+34.                 moved = True
+35.                 continue
+36.             END IF
+37.             IF null_pos[0] != 0 and direct = 2:
+38.                 game_board[null_pos[0]][null_pos[1]], game_board[null_pos[0] - 1][null_pos[1]] = game_board[null_pos[0] - 1][null_pos[1]], -1
+39.                 moved = True
+40.                 continue
+41.             END IF
+42.             IF null_pos[1] != 0 and direct = 3:
+43.                 game_board[null_pos[0]][null_pos[1]], game_board[null_pos[0]][null_pos[1] - 1] = game_board[null_pos[0]][null_pos[1] - 1], -1
+44.                 moved = True
+45.                 continue
+46.             END IF
+47.         runs += 1
+48. END shuffle_game_board
+49.
+50. MODULE move_tile_by_id(tile_id):
+51.     tile_pos = find_tile_location(tile_id)
+52.     IF tile_pos[0] < board_size - 1:
+53.         IF game_board[tile_pos[0] + 1][tile_pos[1]] = -1:
+54.             game_board[tile_pos[0] + 1][tile_pos[1]], game_board[tile_pos[0]][tile_pos[1]] = tile_id, -1
+55.             RETURN 0
+56.         END IF
+57.     END IF
+58.     IF tile_pos[1] < board_size - 1:
+59.         IF game_board[tile_pos[0]][tile_pos[1] + 1] = -1:
+60.             game_board[tile_pos[0]][tile_pos[1] + 1], game_board[tile_pos[0]][tile_pos[1]] = tile_id, -1
+61.             RETURN 0
+62.         END IF
+63.     END IF
+64.     IF tile_pos[0] != 0:
+65.         IF game_board[tile_pos[0] - 1][tile_pos[1]] = -1:
+66.             game_board[tile_pos[0] - 1][tile_pos[1]], game_board[tile_pos[0]][tile_pos[1]] = tile_id, -1
+67.             RETURN 0
+68.         END IF
+69.     END IF
+70.     IF tile_pos[1] != 0:
+71.         IF game_board[tile_pos[0]][tile_pos[1] - 1] = -1:
+72.             game_board[tile_pos[0]][tile_pos[1] - 1], game_board[tile_pos[0]][tile_pos[1]] = tile_id, -1
+73.             RETURN 0
+74.         END IF
+75.     END IF
+76.     RETURN 1
+77. END move_tile_by_id
+78.
+79. MODULE find_tile_location(tile_id):
+80.     FOR y IN range(0, board_size):
+81.         FOR x IN range(0, board_size):
+82.             IF game_board[y][x] = tile_id:
+83.                 RETURN [y, x]
+84.             END IF
+85.     RETURN 1
+86. END find_tile_location
+87.
+88. MODULE find_tile_location_on_complete_board(tile_id):
+89.     FOR y IN range(0, board_size):
+90.         FOR x IN range(0, board_size):
+91.             IF get_complete_game_board()[y][x] = tile_id:
+92.                 RETURN [y, x]
+93.             END IF
+94.     RETURN 1
+95. END find_tile_location_on_complete_board
+96.
+97. MODULE get_complete_game_board():
+98.     complete_board = [[i FOR i IN range(board_size * j, board_size * j + board_size)] FOR j IN range(0, board_size)]
+99.     complete_board[board_size - 1][board_size - 1] = -1
+100.     RETURN complete_board
+101. END get_complete_game_board
+102.
+103. MODULE get_game_board_string():
+104.     strike = "-"
+105.     FOR d IN range(0, board_size):
+106.         strike += "---"
+107.     string = strike + "\n"
+108.     FOR i IN range(0, board_size):
+109.         FOR j IN range(0, board_size):
+110.             IF game_board[i][j] != -1:
+111.                 string += "|" + str(game_board[i][j]).zfill(2)
+112.             ELSE:
+113.                 string += "|  "
+114.             END IF
+115.         string += "|\n" + strike + "\n"
+116.     RETURN string
+117. END get_game_board_string
+118.
+119. MODULE is_game_board_complete():
+120.     RETURN game_board = get_complete_game_board()
+121. END is_game_board_complete
+122.
+123. MODULE get_tile_value(row, col):
+124.     RETURN game_board[row][col]
+125. END get_tile_value
+126.
+127. MODULE move_tile(row, column):
+128.     IF game_board[column][row] >= 0 or game_board[column][row] <= board_size^2 - 2:
+129.         RETURN move_tile_by_id(game_board[column][row])
+130.     END IF
+131.     RETURN 1
+132. END move_tile
+133.
+134. MODULE start_game():
+135.     WHILE True:
+136.         OUTPUT get_game_board_string()
+137.         INPUT move_tile
+138.         IF move_tile_by_id(int(move_tile)) = 0:
+139.             OUTPUT "Moved"
+140.         ELSE:
+141.             OUTPUT "Can't move that"
+142.         END IF
+143.         IF is_game_board_complete():
+144.             OUTPUT "Complete!"
+145.             OUTPUT get_game_board_string()
+146.             break
+147.         END IF
+148. END start_game
+149.
+150. IF board_size > 1:
+151.     board_size = board_size
+152.     game_board = None
+153.     IF self_start_enabled:
+154.         CALL initialize_game_board()
+155.         CALL shuffle_game_board(pow(board_size, 6))
+156.         CALL start_game()
+157.     END IF
+158. END IF
+159.
+160. CALL initialize_game_board()
+161. CALL shuffle_game_board(board_size^6)
+162. CALL start_game()
