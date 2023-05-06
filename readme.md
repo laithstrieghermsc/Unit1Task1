@@ -386,18 +386,18 @@ This moves the cell with value 5 by swapping it with the empty space.
 Distributed under the GNU Public License. See `LICENSE.txt` for more information.
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[Windows 10/11]: ../../../Downloads/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/source/windows-10-11.svg
-[MacOSX]: ../../../Downloads/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/source/macosx.svg
-[Debian]: ../../../Downloads/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/source/debian.svg
-[Pillow]: ../../../Downloads/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/source/pillow.svg
+[Windows 10/11]: source/windows-10-11.svg
+[MacOSX]: source/macosx.svg
+[Debian]: source/debian.svg
+[Pillow]: source/pillow.svg
 [Pillow URL]: https://pypi.org/project/Pillow/
-[tkinter]: ../../../Downloads/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/source/tkinter.svg
+[tkinter]: source/tkinter.svg
 [tkinter URL]: https://docs.python.org/3/library/tkinter.html
-[random]: ../../../Downloads/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/source/random.svg
+[random]: source/random.svg
 [random URL]: https://docs.python.org/3/library/random.html
-[Python3]: ../../../Downloads/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/source/python3.svg
+[Python3]: source/python3.svg
 [Python3 URL]: https://www.python.org/
-[License: GPL v3]: ../../../Downloads/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/source/gplv3.svg
+[License: GPL v3]: source/gplv3.svg
 [License URL]: https://www.gnu.org/licenses/gpl-3.0.en.html
-[MSC]: ../../../Downloads/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/source/msc.svg
-[laith.striegher]: ../../../Downloads/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/Unit1Task1-1cdbe641d5369d0011b22b46d9eb40eb2b012b9f/source/laithstriegher.svg
+[MSC]: source/msc.svg
+[laith.striegher]: source/laithstriegher.svg
