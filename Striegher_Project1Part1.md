@@ -1,4 +1,4 @@
-# <p style="text-align: center; font-size:40px;"><b>Slide</b></p>
+<p style="text-align: center; font-size:40px;"><b>Slide</b></p>
 
 <p style="text-align: center;"> A classic puzzle game by Laith Striegher</p>
 
